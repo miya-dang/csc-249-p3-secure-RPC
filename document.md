@@ -190,7 +190,7 @@ Purpose: Confirm establishment of symmetric key, finalize the TLS handshake.
 
 Exploit: An attacker could easily calculate the private key directly from the public key. And then, they can use that private key to decrypt the symmetric key, allowing them to read and potentially intercept communication between the client and the server.
 
-* The certificate authority's public key distribution system lacks security measures. The client can directly fetche the public key from the CA without any verification or security measures, inherently assuming that the CA is trustworthy.
+* The certificate authority's public key distribution system lacks security measures. The client can directly fetch the public key from the CA without any verification or security measures, inherently assuming that the CA is trustworthy.
  
 Exploit: An attacker performing a "man-in-the-middle" attack could intercept the client’s request to retrieve the CA’s public key and replace the public key with their own key. The attacker will then be able to sign forged certificates and impersonate the server.
 
