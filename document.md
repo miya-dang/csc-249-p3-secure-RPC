@@ -39,7 +39,7 @@ In that:
 
 # 3.    Example output
 
-* Server:
+### Server:
 Generated public key '(35212, 56533)' and private key '21321'
 
 Connecting to the certificate authority at IP 127.0.0.1 and port 55553
@@ -75,7 +75,7 @@ Sending encoded response 'HMAC_20008[symmetric_47326[Hello, world]]' back to the
 server is done!
 
 
-* VPN:
+### VPN:
 VPN starting - listening for connections at IP 127.0.0.1 and port 55554
 
 Connected established with ('127.0.0.1', 53164)
@@ -101,7 +101,7 @@ Received server response: 'b'HMAC_20008[symmetric_47326[Hello, world]]'' [41 byt
 VPN is done!
 
 
-* Client:
+### Client:
 Connecting to the certificate authority at IP 127.0.0.1 and port 55553
 
 Connection established, requesting public key
@@ -186,13 +186,16 @@ Purpose: Confirm establishment of symmetric key, finalize the TLS handshake.
 
 # 5.    Two ways in which our simulation fails to achieve real security, and how these failures might be exploited by a malicious party:
 
-* The asymmetric key generation scheme in this simulation relies on simplified operations that are not cryptographically secure. 
+* The asymmetric key generation scheme in this simulation relies on simplified operations that are not cryptographically secure.
+
 Exploit: As it lacks mathematical complexity, an attacker could reverse-engineer the public key to derive the private key, breaking the confidentiality of encrypted messages and compromising the TLS handshake. 
 
-* The certificate authority's public key distribution system: The CA’s public key is transmitted to the client insecurely. 
+* The certificate authority's public key distribution system: The CA’s public key is transmitted to the client insecurely.
+ 
 Exploit: A man-in-the-middle attacker could potentially intercept with this and replace the public key with their own key. This would allow them to sign forged certificates and therefore impersonate the server.
 
 * The encryption/decryption/HMAC/verification algorithms is oversimplified: These operations use basic string manipulation rather than other secure, standard cryptographic algorithms.
+
 Exploit: An attacker could easily decrypt the symmetric key or messages and generate different HMAC values, allowing them to tamper with the messages and the communication channel.
 
 
