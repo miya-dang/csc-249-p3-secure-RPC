@@ -2,22 +2,22 @@
 
 This application simulates a secure communication between a client and a server, through a VPN. The VPN, as the "man-in-the-middle" is unable to read any sensitive communication between the client and the server. This is because the communication is encrypted through a TLS handshake, using key cryptography and certificate verification. The client and server establishes a symmetric encryption key during the TLS handshake. Then, all messages exchanged between them afterward is encrypted using this symmetric key.
 
-* Certificate Authority:
+### Certificate Authority:
 Establishes trust between the server and client by signing and verifying certificates. 
 - Receives unsigned certificates from servers, signs them using its private key, and returns the signed certificate to the server. 
 - Makes its public key available. Clients can use this key to verify certificates.
 
-* Server: 
+### Server: 
 Securely communicates with client. Echoes back client's message.
 - Generates an asymmetric public-private key pair. The public key is shared with the client through a certificate, and the private key is kept to decrypt sensitive data.
 - Generates a certificate containing its public key, IP address, and port number, and sends it to the Certificate Authority for signing. The signed certificate is used to prove its authenticity to clients.
 - During the TLS handshake, the server sends the signed certificate to the client. It receives and decrypts a symmetric key sent by the client, establishing a shared key for secure communication.
 - Once the TLS handshake is complete, the server uses the symmetric key to encrypt and decrypt all subsequent communication with the client (echoing back messages received from the client).
 
-* VPN:
+### VPN:
 An intermediary that forwards communication between the client and server.
 
-* Client:
+### Client:
 Initiates secure communication with the server. Then sends a message and receives the echo message back from the server.
 - Requests a secure handshake with the server. During the handshake, it verifies the server’s certificate and establishes a shared symmetric encryption key using the server’s public key.
 - After the handshake, the client encrypts all outgoing messages with the shared symmetric key and decrypts responses from the server, ensuring secure communication.
