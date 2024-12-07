@@ -186,7 +186,7 @@ Purpose: Confirm establishment of symmetric key, finalize the TLS handshake.
 
 # 5.    Two ways in which our simulation fails to achieve real security, and how these failures might be exploited by a malicious party:
 
-* The asymmetric key generation scheme in this simulation relies on simplified operations that are not cryptographically secure. The calculation to generate the private key is very simple: p - private key. Moreover, we are using a fixed number 56533 as p. 
+* The asymmetric key generation scheme in this simulation relies on simplified operations that are not cryptographically secure. The calculation to generate the private key is very simple: p - private key. Moreover, we are using a fixed number 56533 as p, and that p number is sent along with the public key. 
 
 Exploit: An attacker could easily calculate the private key directly from the public key. And then, they can use that private key to decrypt the symmetric key, allowing them to read and potentially intercept communication between the client and the server.
 
