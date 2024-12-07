@@ -32,7 +32,7 @@ An unsigned certificate is a string with the format:
 Example: (35212, 56533): 127.0.0.1: 65432
 
 In that:
-* 35212, 56533 is the server’s public key.
+* (35212, 56533) is the server’s public key.
 * 127.0.0.1 is the server's IP address.
 * 65432 is the server's listening port.
 
