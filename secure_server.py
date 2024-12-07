@@ -28,7 +28,7 @@ SERVER_PORT = args.server_port  # Port to listen on (non-privileged ports are > 
 
 # Format and return a certificate containing the server's socket information and public key
 def format_certificate(public_key):
-    unsigned_certificate = '' # replace this line
+    unsigned_certificate = f"{public_key}, {SERVER_IP}, {SERVER_PORT}" 
     print(f"Prepared the formatted unsigned certificate '{unsigned_certificate}'")
     return unsigned_certificate
 
@@ -56,14 +56,30 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 print(f"Received signed certificate '{signed_certificate}' from the certificate authority")
 
 def TLS_handshake_server(connection):
-    ## Instructions ##
-    # Fill this function in with the TLS handshake:
-    #  * Receive a request for a TLS handshake from the client
-    #  * Send a signed certificate to the client
-    #    * A signed certificate variable should be available as 'signed_certificate'
-    #  * Receive an encrypted symmetric key from the client
-    #  * Decrypt and return the symmetric key for use in further communications with the client
-    return 0
+
+    #   Receive a request for a TLS handshake from the client
+    handshake_request = connection.recv(1024).decode('utf-8')
+    print(f"Received handshake request: {handshake_request}")
+    if handshake_request != "hello hello hello":
+        print("Invalid handshake request. Closing connection.")
+        connection.close()
+        return None #Exit
+    
+    #   Send a signed certificate to the client: A signed certificate variable should be available as 'signed_certificate'
+    connection.sendall(bytes(signed_certificate, 'utf-8'))
+    print(f"Signed certificate sent to client: {signed_certificate}")
+    
+    #   Receive an encrypted symmetric key from the client
+    encrypted_symm_key = connection.recv(1024).decode('utf-8')
+    print(f"Received encrypted symmetric key: {encrypted_symm_key}")
+
+    #   Decrypt the symmetric key
+    symm_key = cryptgraphy_simulator.symmetric_decrypt(private_key, encrypted_symm_key)
+    print(f"Decrypted the symmetric key: {symm_key}")
+    
+    #   Return the symmetric key for use in further communications with the client
+    return symm_key
+    # return 0
 
 def process_message(message):
     # Change this function to change the service your server provides
