@@ -26,7 +26,9 @@ Initiates secure communication with the server. Then sends a message and receive
 # 2.    Format of an unsigned certificate
 
 An unsigned certificate is a string with the format:
+
 (<server_public_key>): <server_IP>: <server_port>
+
 Example: (35212, 56533): 127.0.0.1: 65432
 
 In that:
