@@ -48,7 +48,7 @@ def encode_message(message):
     return message
 
 def TLS_handshake_client(connection, server_ip=SERVER_IP, server_port=SERVER_PORT):
-    
+
     #   Request a TLS handshake from the server
     print(f"Client requesting TLS handshake from server at IP: {server_ip}, port: {server_port}.")
     message = "hello hello hello"
@@ -70,15 +70,14 @@ def TLS_handshake_client(connection, server_ip=SERVER_IP, server_port=SERVER_POR
         return None #Exit
 
     #   Extract the server's public key, IP address, and port from the certificate
-    cert_parts = unsigned_cert.split(", ")
+    cert_parts = unsigned_cert.split(": ")
     server_public_key = cert_parts[0]
     server_IP = cert_parts[1]
     server_port = cert_parts[2]
     print(f"Extracted server public key: {server_public_key}, IP: {server_IP}, Port: {server_port}")
 
     #   Verify that you're communicating with the port and IP specified in the certificate
-    server_address = connection.getpeername()
-    if server_address[0] != server_ip or server_address[1] != int(server_port):
+    if server_IP != SERVER_IP or int(server_port) != SERVER_PORT:
         print("Warning: Server's IP or port doesn't match the certificate!")
         connection.close()
         return None
@@ -90,7 +89,7 @@ def TLS_handshake_client(connection, server_ip=SERVER_IP, server_port=SERVER_POR
     print(f"Generated symmetric key: {symm_key}")
 
     #   Use the server's public key to encrypt the symmetric key: Use cryptography_simulator.public_key_encrypt()
-    encrypted_symm_key = cryptgraphy_simulator.public_key_encrypt(server_public_key, symmetric_key)
+    encrypted_symm_key = cryptgraphy_simulator.public_key_encrypt(server_public_key, symm_key)
     print(f"Encrypted symmetric key: {encrypted_symm_key}")
 
     #   Send the encrypted symmetric key to the server

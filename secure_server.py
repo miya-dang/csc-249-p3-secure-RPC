@@ -28,7 +28,7 @@ SERVER_PORT = args.server_port  # Port to listen on (non-privileged ports are > 
 
 # Format and return a certificate containing the server's socket information and public key
 def format_certificate(public_key):
-    unsigned_certificate = f"{public_key}, {SERVER_IP}, {SERVER_PORT}" 
+    unsigned_certificate = f"{public_key}: {SERVER_IP}: {SERVER_PORT}" 
     print(f"Prepared the formatted unsigned certificate '{unsigned_certificate}'")
     return unsigned_certificate
 
@@ -74,7 +74,7 @@ def TLS_handshake_server(connection):
     print(f"Received encrypted symmetric key: {encrypted_symm_key}")
 
     #   Decrypt the symmetric key
-    symm_key = cryptgraphy_simulator.symmetric_decrypt(private_key, encrypted_symm_key)
+    symm_key = cryptgraphy_simulator.private_key_decrypt(private_key, encrypted_symm_key)
     print(f"Decrypted the symmetric key: {symm_key}")
     
     #   Return the symmetric key for use in further communications with the client
