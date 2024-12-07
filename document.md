@@ -186,17 +186,13 @@ Purpose: Confirm establishment of symmetric key, finalize the TLS handshake.
 
 # 5.    Two ways in which our simulation fails to achieve real security, and how these failures might be exploited by a malicious party:
 
-* The asymmetric key generation scheme in this simulation relies on simplified operations that are not cryptographically secure.
+* The asymmetric key generation scheme in this simulation relies on simplified operations that are not cryptographically secure. The calculation to generate the private key is very simple: p - private key. Moreover, we are using a fixed number 56533 as p. 
 
-Exploit: As it lacks mathematical complexity, an attacker could reverse-engineer the public key to derive the private key, breaking the confidentiality of encrypted messages and compromising the TLS handshake. 
+Exploit: An attacker could easily calculate the private key directly from the public key. And then, they can use that private key to decrypt the symmetric key, allowing them to read and potentially intercept communication between the client and the server.
 
-* The certificate authority's public key distribution system: The CA’s public key is transmitted to the client insecurely.
+* The certificate authority's public key distribution system: the client directly fetches the CA’s public key insecurely, without any protection or chain of trust.
  
-Exploit: A man-in-the-middle attacker could potentially intercept with this and replace the public key with their own key. This would allow them to sign forged certificates and therefore impersonate the server.
-
-* The encryption/decryption/HMAC/verification algorithms is oversimplified: These operations use basic string manipulation rather than other secure, standard cryptographic algorithms.
-
-Exploit: An attacker could easily decrypt the symmetric key or messages and generate different HMAC values, allowing them to tamper with the messages and the communication channel.
+Exploit: An attacker as a "man-in-the-middle attacker" could intercept the client’s request for the CA's public key and replace the public key with their own key. The attacker will then be able to sign forged certificates and impersonate the server.
 
 
 # 6.    Acknowledgement
